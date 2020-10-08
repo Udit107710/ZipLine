@@ -22,7 +22,7 @@ def create_app(test_config=None):
         return jsonify(swag)
 
     api = Api(app)
-    api.add_resource(Home, '/')
+    # api.add_resource(Home, '/')
     api.add_resource(ProductListView, '/api/v1/products', endpoint="products")
     api.add_resource(ProductInstanceView, '/api/v1/product/<product_id>', methods=["GET", "PATCH", "PUT", "DELETE"], endpoint="productEdit")
     api.add_resource(ProductInstanceView, '/api/v1/product/', methods=["POST"], endpoint="productCreate")

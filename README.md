@@ -49,7 +49,6 @@ docker-compose up
 
 |URL|Method|Parameters|Response|
 |---|---|---|---|
-|/| GET | | HTML page to display documentation|
 |api/v1/product/<product_id>| GET |<ol><li> product_id (in URL)</li></ol>| [Product (with ID)](#product-with-id)|
 |api/v1/product/ | POST |<ol><li> [Product](#product) (in body)</li></ol>| [Message](#create-message)|
 |api/v1/product/<product_id>| PATCH |<ol><li> product_id (in URL)</li><li>[Product](#product) (in body)</li></ol>| [Update Message](#update-message)|
