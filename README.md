@@ -49,6 +49,7 @@ docker-compose up
 
 |URL|Method|Parameters|Response|
 |---|---|---|---|
+|/| GET | | HTML page to display documentation|
 |api/v1/product/<product_id>| GET |<ol><li> product_id (in URL)</li></ol>| [Product (with ID)](#product-with-id)|
 |api/v1/product/ | POST |<ol><li> [Product](#product) (in body)</li></ol>| [Message](#create-message)|
 |api/v1/product/<product_id>| PATCH |<ol><li> product_id (in URL)</li><li>[Product](#product) (in body)</li></ol>| [Update Message](#update-message)|
@@ -70,7 +71,7 @@ docker-compose up
 <br>
 <br>
 
-#### List with 5 elements skipped and 2 fetched
+### List with 5 elements skipped and 2 fetched
 ![002.png](zipline/images/002.png)
 
 Find postman collection [here](https://www.getpostman.com/collections/801dba9637c62c737893)

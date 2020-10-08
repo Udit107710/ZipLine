@@ -1,8 +1,220 @@
 <html>
 <head>
 <title>Zipline Documentation</title>
+<style>
+    body {
+   color: black;
+}
+
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+</style>
 </head>
 <body>
     <h1 id="zipline">ZipLine</h1>
+<p>This app contains APIs which will allow you to perform CRUD operations on your MongoDB Clusters</p>
+<p><hr>
+<br></p>
+<h2 id="supported-features">Supported Features</h2>
+<ul>
+<li>[x] CREATE a single product</li>
+<li>[x] CREATE multiple products</li>
+<li>[x] RETRIEVE a single product</li>
+<li>[x] RETRIEVE multiple products</li>
+<li>[x] UPDATE a single product</li>
+<li>[x] UPDATE multiple products</li>
+<li>[x] DELETE a single product</li>
+<li>[x] DELETE multiple products</li>
+<li>[x] Detailed documentation</li>
+<li>[x] Support for pagination</li>
+<li>[x] Versioning flexibility</li>
+<li>[ ] Multiple operations in a single query</li>
+<li>[ ] Extensive logging</li>
+<li>[ ] Filter while fetching multiple objects</li>
+<li>[ ] Swagger UI
+<br>
+<b><em>Object schema checking feature is not added to take advantage of NoSQL&#39;s schema indepenance</em></b>
+<hr>
+<br></li>
+</ul>
+<h2 id="installation">Installation</h2>
+<h3 id="dependencies">Dependencies</h3>
+<ol>
+<li><a href="https://docs.docker.com/compose/">Docker Compose</a></li>
+<li>Internet connection to connect to Cluster</li>
+</ol>
+<h3 id="steps-to-run">Steps to run</h3>
+<pre><code>git <span class="hljs-keyword">clone</span> <span class="hljs-title">https</span>://github.com/Udit107710/ZipLine.git
+</code></pre><pre><code><span class="hljs-built_in">cd</span> ZipLine
+</code></pre><pre><code><span class="hljs-attribute">docker-compose up</span>
+</code></pre><p><hr>
+<br></p>
+<h2 id="endpoints">Endpoints</h2>
+<p><br></p>
+<p><strong>PATCH will replace particular fields whereas PUT will replace whole object</strong></p>
+<table>
+<thead>
+<tr>
+<th>URL</th>
+<th>Method</th>
+<th>Parameters</th>
+<th>Response</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/</td>
+<td>GET</td>
+<td></td>
+<td>HTML page to display documentation</td>
+</tr>
+<tr>
+<td>api/v1/product/<product_id></td>
+<td>GET</td>
+<td><ol><li> product_id (in URL)</li></ol></td>
+<td><a href="#product-with-id">Product (with ID)</a></td>
+</tr>
+<tr>
+<td>api/v1/product/</td>
+<td>POST</td>
+<td><ol><li> <a href="#product">Product</a> (in body)</li></ol></td>
+<td><a href="#create-message">Message</a></td>
+</tr>
+<tr>
+<td>api/v1/product/<product_id></td>
+<td>PATCH</td>
+<td><ol><li> product_id (in URL)</li><li><a href="#product">Product</a> (in body)</li></ol></td>
+<td><a href="#update-message">Update Message</a></td>
+</tr>
+<tr>
+<td>api/v1/product/<product_id></td>
+<td>PUT</td>
+<td><ol><li> product_id (in URL)</li><li><a href="#product">Product</a> (in body)</li></ol></td>
+<td><a href="#update-message">Update Message</a></td>
+</tr>
+<tr>
+<td>api/v1/products</td>
+<td>GET</td>
+<td><ol><li> skip<sup>1</sup> (in query)</li><li> limit<sup>2</sup> (in query)</li></ol></td>
+<td><a href="##product-with-details">Products with details</a></td>
+</tr>
+<tr>
+<td>api/v1/products</td>
+<td>POST</td>
+<td><ol><li> Array of <a href="#product">Product</a> (in body)</li></ol></td>
+<td><a href="#bulk-write-message">Bulk Update Message</a></td>
+</tr>
+<tr>
+<td>api/v1/products</td>
+<td>PATCH</td>
+<td><ol><li> Array of <a href="#edit-multiple-details">this</a> (in body)</li></ol></td>
+<td><a href="#bulk-write-message">Bulk Update Message</a></td>
+</tr>
+<tr>
+<td>api/v1/products</td>
+<td>PUT</td>
+<td><ol><li> Array of <a href="#edit-multiple-details">this</a> (in body)</li></ol></td>
+<td><a href="#bulk-write-message">Bulk Update Message</a></td>
+</tr>
+</tbody>
+</table>
+<p>1: How many products to skip from start</p>
+<p>2: How many products to fetch</p>
+<p><hr>
+<br></p>
+<h2 id="examples">Examples</h2>
+<h3 id="list-with-5-elements-skipped-and-1-fetched">List with 5 elements skipped and 1 fetched</h3>
+<p><img src="zipline/images/001.png" alt="001.png">
+<br>
+<br></p>
+<h3 id="list-with-5-elements-skipped-and-2-fetched">List with 5 elements skipped and 2 fetched</h3>
+<p><img src="zipline/images/002.png" alt="002.png"></p>
+<p>Find postman collection <a href="https://www.getpostman.com/collections/801dba9637c62c737893">here</a></p>
+<h2 id="object-schemas">Object Schemas</h2>
+<h3 id="product">Product</h3>
+<pre><code>{
+    <span class="hljs-string">'name'</span>:   &lt;<span class="hljs-keyword">string</span>&gt;,
+    <span class="hljs-string">'brand_name'</span>:   &lt;<span class="hljs-keyword">string</span>&gt;,
+    <span class="hljs-string">'regular_price_value'</span>:   &lt;<span class="hljs-keyword">float</span>&gt;,
+    <span class="hljs-string">'offer_price_value'</span>:   &lt;<span class="hljs-keyword">float</span>&gt;,
+    <span class="hljs-string">'currency'</span>:   &lt;<span class="hljs-keyword">string</span>&gt;,
+    <span class="hljs-string">'classification_l1'</span>:  &lt;<span class="hljs-keyword">string</span>&gt;v,
+    <span class="hljs-string">'classification_l2'</span>:   &lt;<span class="hljs-keyword">string</span>&gt;,
+    <span class="hljs-string">'classification_l3'</span>:   &lt;<span class="hljs-keyword">string</span>&gt;,
+    <span class="hljs-string">'classification_l4'</span>:   &lt;<span class="hljs-keyword">string</span>&gt;,
+    <span class="hljs-string">'image_url'</span>:   &lt;<span class="hljs-keyword">string</span>&gt;,
+}
+</code></pre><h3 id="product-with-id">Product With Id</h3>
+<pre><code>{
+    <span class="hljs-string">'_id'</span>: &lt;<span class="hljs-keyword">string</span>&gt;,
+    <span class="hljs-string">'name'</span>:   &lt;<span class="hljs-keyword">string</span>&gt;,
+    <span class="hljs-string">'brand_name'</span>:   &lt;<span class="hljs-keyword">string</span>&gt;,
+    <span class="hljs-string">'regular_price_value'</span>:   &lt;<span class="hljs-keyword">float</span>&gt;,
+    <span class="hljs-string">'offer_price_value'</span>:   &lt;<span class="hljs-keyword">float</span>&gt;,
+    <span class="hljs-string">'currency'</span>:   &lt;<span class="hljs-keyword">string</span>&gt;,
+    <span class="hljs-string">'classification_l1'</span>:  &lt;<span class="hljs-keyword">string</span>&gt;v,
+    <span class="hljs-string">'classification_l2'</span>:   &lt;<span class="hljs-keyword">string</span>&gt;,
+    <span class="hljs-string">'classification_l3'</span>:   &lt;<span class="hljs-keyword">string</span>&gt;,
+    <span class="hljs-string">'classification_l4'</span>:   &lt;<span class="hljs-keyword">string</span>&gt;,
+    <span class="hljs-string">'image_url'</span>:   &lt;<span class="hljs-keyword">string</span>&gt;,
+}
+</code></pre><h3 id="create-message">Create Message</h3>
+<pre><code>{
+    <span class="hljs-attr">"ObjectId"</span>: &lt;string&gt;
+}
+</code></pre><h3 id="update-message">Update Message</h3>
+<pre><code>{
+    <span class="hljs-attr">"acknowledged"</span>: &lt;bool&gt;,
+    <span class="hljs-attr">"matched_count"</span>: &lt;int&gt;,
+    <span class="hljs-attr">"modified_count"</span>: &lt;int&gt;,
+    <span class="hljs-attr">"upserted_id"</span>: &lt;int&gt;,
+}
+</code></pre><h3 id="bulk-write-message">Bulk Write Message</h3>
+<pre><code>{
+    <span class="hljs-attr">"acknowledged"</span>: &lt;bool&gt;,
+    <span class="hljs-attr">"matched_count"</span>: &lt;int&gt;,
+    <span class="hljs-attr">"modified_count"</span>: &lt;int&gt;,
+    <span class="hljs-attr">"deleted_count"</span>: &lt;int&gt;,
+    <span class="hljs-attr">"inserted_count"</span>: &lt;int&gt;,
+}
+</code></pre><h3 id="products-with-details">Products with details</h3>
+<pre><code>{
+    <span class="hljs-string">"products"</span>: [
+        ...
+        {
+            <span class="hljs-string">'_id'</span>: &lt;<span class="hljs-keyword">string</span>&gt;,
+            <span class="hljs-string">'name'</span>:   &lt;<span class="hljs-keyword">string</span>&gt;,
+            <span class="hljs-string">'brand_name'</span>:   &lt;<span class="hljs-keyword">string</span>&gt;,
+            <span class="hljs-string">'regular_price_value'</span>:   &lt;<span class="hljs-keyword">float</span>&gt;,
+            <span class="hljs-string">'offer_price_value'</span>:   &lt;<span class="hljs-keyword">float</span>&gt;,
+            <span class="hljs-string">'currency'</span>:   &lt;<span class="hljs-keyword">string</span>&gt;,
+            <span class="hljs-string">'classification_l1'</span>:  &lt;<span class="hljs-keyword">string</span>&gt;v,
+            <span class="hljs-string">'classification_l2'</span>:   &lt;<span class="hljs-keyword">string</span>&gt;,
+            <span class="hljs-string">'classification_l3'</span>:   &lt;<span class="hljs-keyword">string</span>&gt;,
+            <span class="hljs-string">'classification_l4'</span>:   &lt;<span class="hljs-keyword">string</span>&gt;,
+            <span class="hljs-string">'image_url'</span>:   &lt;<span class="hljs-keyword">string</span>&gt;,
+        },
+        ...
+    ]
+    <span class="hljs-string">"skip"</span>: &lt;<span class="hljs-keyword">int</span>&gt;,
+    <span class="hljs-string">"limit"</span>: &lt;<span class="hljs-keyword">int</span>&gt;
+}
+</code></pre><h3 id="edit-multiple-details">Edit Multiple Details</h3>
+<pre><code><span class="hljs-meta">[</span>
+    <span class="hljs-params">...</span>
+    {
+        <span class="hljs-string">"_id"</span>: &lt;<span class="hljs-built_in">string</span>&gt;,
+        <span class="hljs-string">"data"</span>:
+                {
+                    <span class="hljs-params">...</span>
+                    &lt;<span class="hljs-built_in">string</span>&gt;: &lt;<span class="hljs-built_in">string</span>&gt;,
+                    <span class="hljs-params">...</span>
+                }
+    }
+    <span class="hljs-params">...</span>
+<span class="hljs-meta">]</span>
+</code></pre>
 </body>
 </html>
