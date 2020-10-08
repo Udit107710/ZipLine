@@ -49,14 +49,14 @@ docker-compose up
 
 |URL|Method|Parameters|Response|
 |---|---|---|---|
-|api/v1/product/<product_id>| GET |<ol><li> product_id (in URL)</li></ol>| [Product (with ID)](#product-id)|
-|api/v1/product/ | POST |<ol><li> [Product](#product) (in body)</li></ol>| [Message](#message-object)|
-|api/v1/product/<product_id>| PATCH |<ol><li> product_id (in URL)</li><li>[Product](#product) (in body)</li></ol>| [Update Message](#update-id)|
-|api/v1/product/<product_id>| PUT |<ol><li> product_id (in URL)</li><li>[Product](#product) (in body)</li></ol>| [Update Message](#update-id)|
-|api/v1/products | GET |<ol><li> skip (in query) [^1] </li><li> limit (in query) [^2] </li></ol>| [Products with details](##product-detail)|
-|api/v1/products | POST |<ol><li> Array of [Product](#product) (in body)</li></ol>| [Bulk Update Message](#bulk-write)|
-|api/v1/products | PATCH |<ol><li> Array of [this](#edit-mul) (in body)</li></ol>| [Bulk Update Message](#bulk-write)|
-|api/v1/products | PUT |<ol><li> Array of [this](#edit-mul) (in body)</li></ol>| [Bulk Update Message](#bulk-write)|
+|api/v1/product/<product_id>| GET |<ol><li> product_id (in URL)</li></ol>| [Product (with ID)](#product-with-id)|
+|api/v1/product/ | POST |<ol><li> [Product](#product) (in body)</li></ol>| [Message](#create-message)|
+|api/v1/product/<product_id>| PATCH |<ol><li> product_id (in URL)</li><li>[Product](#product) (in body)</li></ol>| [Update Message](#update-message)|
+|api/v1/product/<product_id>| PUT |<ol><li> product_id (in URL)</li><li>[Product](#product) (in body)</li></ol>| [Update Message](#update-message)|
+|api/v1/products | GET |<ol><li> skip[^1] (in query)</li><li> limit[^2] (in query)</li></ol>| [Products with details](##product-with-details)|
+|api/v1/products | POST |<ol><li> Array of [Product](#product) (in body)</li></ol>| [Bulk Update Message](#bulk-write-message)|
+|api/v1/products | PATCH |<ol><li> Array of [this](#edit-multiple-details) (in body)</li></ol>| [Bulk Update Message](#bulk-write-message)|
+|api/v1/products | PUT |<ol><li> Array of [this](#edit-multiple-details) (in body)</li></ol>| [Bulk Update Message](#bulk-write-message)|
 
 [^1]: How many products to skip from start
 
@@ -65,14 +65,14 @@ docker-compose up
 <br>
 
 ## Examples
-![001.png](images/001.png)
-![002.png](images/002.png)
+![001.png](zipline/images/001.png)
+![002.png](zipline/images/002.png)
 
 Find more such examples [here](https://www.getpostman.com/collections/801dba9637c62c737893)
 
 ## Object Schemas
 
-### Product {#product}
+### Product
 ```
 {
     'name':   <string>,
@@ -88,7 +88,7 @@ Find more such examples [here](https://www.getpostman.com/collections/801dba9637
 }
 ```
 
-### Product(With ID) {#product-id}
+### Product With Id
 ```
 {
     '_id': <string>,
@@ -105,14 +105,14 @@ Find more such examples [here](https://www.getpostman.com/collections/801dba9637
 }
 ```
 
-### ObjectID {#message-object}
+### Create Message
 ```
 {
     "ObjectId": <string>
 }
 ```
 
-### Update Message {#update-id}
+### Update Message
 ```
 {
     "acknowledged": <bool>,
@@ -122,7 +122,7 @@ Find more such examples [here](https://www.getpostman.com/collections/801dba9637
 }
 ```
 
-### Bulk Write Message {#bulk-write}
+### Bulk Write Message
 ```
 {
     "acknowledged": <bool>,
@@ -133,7 +133,7 @@ Find more such examples [here](https://www.getpostman.com/collections/801dba9637
 }
 ```
 
-### Products with details {#product-detail}
+### Products with details
 ```
 {
     "products": [
@@ -158,7 +158,7 @@ Find more such examples [here](https://www.getpostman.com/collections/801dba9637
 }
 ```
 
-### Edit Multiple Details {#edit-mul}
+### Edit Multiple Details
 ```
 [
     ...
