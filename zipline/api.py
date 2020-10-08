@@ -1,5 +1,5 @@
 from bson.objectid import ObjectId
-from pymongo import UpdateOne, ReplaceOne, InsertOne, DeleteOne
+from pymongo import UpdateOne, ReplaceOne, InsertOne, DeleteOne, DeleteMany
 
 from flask_restful import Resource, fields, marshal_with, marshal
 from flask import render_template, make_response, request
@@ -39,6 +39,36 @@ class ProductListView(Resource):
                     type: integer
                 description: The number of objects to skip fecthing
                 required: false
+            -   in: body
+                description: Fields with values to use while filtering
+                schema:
+                    type: object
+                    properties:
+                        _id:
+                            type: ObjectId
+                        name:
+                            type: string
+                        brand_name:
+                            type: string
+                        regular_price_value:
+                            type: number
+                            format: float
+                        offer_price_value:
+                            type: number
+                            format: float
+                        currency:
+                            type: string
+                        classification_l1:
+                            type: string
+                        classification_l2:
+                            type: string
+                        classification_l3:
+                            type: string
+                        classification_l4:
+                            type: string
+                        image_url:
+                            type: string
+
         responses:
             '200':
                 description: List of product objects with skip and limit used for querying db
@@ -88,8 +118,12 @@ class ProductListView(Resource):
         results = []
         limit = request.args.get('limit', default=5, type=int)
         skip = request.args.get('skip', default=0, type=int)
-        for d in collection.find().skip(skip).limit(limit):
-            results.append(modify_product(d))
+        if request.json:
+            query = collection.find(request.json).skip(skip).limit(limit)
+        else:
+            query = collection.find().skip(skip).limit(limit)
+        for q in query:
+            results.append(modify_product(q))
         return {"products": results, "skip": skip, "limit": limit}
 
     @marshal_with(resource_field_bulk_write)
@@ -422,7 +456,7 @@ class ProductListView(Resource):
         """
         requests = []
         for q in request.json:
-            requests.append(DeleteOne(q))
+            requests.append(DeleteMany(q))
         return perform_bulk(collection, requests), 200
 
 class ProductInstanceView(Resource):

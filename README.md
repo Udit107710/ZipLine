@@ -1,5 +1,5 @@
 # ZipLine
-This app contains APIs which will allow you to perform CRUD operations on your MongoDB Clusters
+filter app contains APIs which will allow you to perform CRUD operations on your MongoDB Clusters
 <hr>
 <br>
 
@@ -17,7 +17,7 @@ This app contains APIs which will allow you to perform CRUD operations on your M
 - [x] Versioning flexibility
 - [ ] Multiple operations in a single query
 - [ ] Extensive logging
-- [ ] Filter while fetching multiple objects
+- [x] Filter while fetching and deleting multiple objects
 - [ ] Swagger UI
 <br>
 <b>*Object schema checking feature is not added to take advantage of NoSQL's schema indepenance*</b>
@@ -47,33 +47,106 @@ docker-compose up
 
 **PATCH will replace particular fields whereas PUT will replace whole object**
 
+### For Single Instance Resource Handling
+
 |URL|Method|Parameters|Response|
 |---|---|---|---|
 |api/v1/product/<product_id>| GET |<ol><li> product_id (in URL)</li></ol>| [Product (with ID)](#product-with-id)|
 |api/v1/product/ | POST |<ol><li> [Product](#product) (in body)</li></ol>| [Message](#create-message)|
 |api/v1/product/<product_id>| PATCH |<ol><li> product_id (in URL)</li><li>[Product](#product) (in body)</li></ol>| [Update Message](#update-message)|
 |api/v1/product/<product_id>| PUT |<ol><li> product_id (in URL)</li><li>[Product](#product) (in body)</li></ol>| [Update Message](#update-message)|
-|api/v1/products | GET |<ol><li> skip<sup>1</sup> (in query)</li><li> limit<sup>2</sup> (in query)</li></ol>| [Products with details](##product-with-details)|
+|api/v1/product/<product_id>| DELETE | <ol><li> product_id (in URL)</li></ol> |[Delete Message](#delete-message)|
+### For Multiple Instnace Resource Handling
+
+|URL|Method|Parameters|Response|
+|---|---|---|---|
+|api/v1/products | GET |<ol><li> skip<sup>1</sup> (in query)</li><li> limit<sup>2</sup> (in query)</li><li>Array of [filter](#edit-multiple-details) (in body)</li></ol>| [Products with details](##product-with-details)|
 |api/v1/products | POST |<ol><li> Array of [Product](#product) (in body)</li></ol>| [Bulk Update Message](#bulk-write-message)|
-|api/v1/products | PATCH |<ol><li> Array of [this](#edit-multiple-details) (in body)</li></ol>| [Bulk Update Message](#bulk-write-message)|
-|api/v1/products | PUT |<ol><li> Array of [this](#edit-multiple-details) (in body)</li></ol>| [Bulk Update Message](#bulk-write-message)|
+|api/v1/products | PATCH |<ol><li> Array of [filter](#edit-multiple-details) (in body)</li></ol>| [Bulk Update Message](#bulk-write-message)|
+|api/v1/products | PUT |<ol><li> Array of [filter](#edit-multiple-details) (in body)</li></ol>| [Bulk Update Message](#bulk-write-message)|
+|api/v1/products | DELETE |<ol><li> Array of [filter](#edit-multiple-details) (in body)</li></ol>| [Bulk Update Message](#bulk-write-message)|
 
 1: How many products to skip from start
-
 2: How many products to fetch
 <hr>
 <br>
 
 ## Examples
-### List with 5 elements skipped and 1 fetched
+
+Find postman collection [here](https://www.getpostman.com/collections/801dba9637c62c737893)
+
+<div class="postman-run-button"
+data-postman-action="collection/import"
+data-postman-var-1="801dba9637c62c737893"></div>
+<script type="text/javascript">
+  (function (p,o,s,t,m,a,n) {
+    !p[s] && (p[s] = function () { (p[t] || (p[t] = [])).push(arguments); });
+    !o.getElementById(s+t) && o.getElementsByTagName("head")[0].appendChild((
+      (n = o.createElement("script")),
+      (n.id = s+t), (n.async = 1), (n.src = m), n
+    ));
+  }(window, document, "_pm", "PostmanRunObject", "https://run.pstmn.io/button.js"));
+</script>
+
+### List with 5 objects skipped and 1 fetched
 ![001.png](zipline/images/001.png)
 <br>
 <br>
 
-### List with 5 elements skipped and 2 fetched
+### List with 5 objects skipped and 2 fetched
 ![002.png](zipline/images/002.png)
+<br>
+<br>
 
-Find postman collection [here](https://www.getpostman.com/collections/801dba9637c62c737893)
+### List with 5 objects filtered by classification_l1
+![010.png](zipline/images/010.png)
+<br>
+<br>
+
+### Created 3 objects
+![003.png](zipline/images/003.png)
+<br>
+<br>
+
+### Replaced 3 objects
+![004.png](zipline/images/004.png)
+<br>
+<br>
+
+### Appended data to three objects
+![005.png](zipline/images/005.png)
+<br>
+<br>
+
+### Delted 623 objects
+![012.png](zipline/images/012.png)
+<br>
+<br>
+
+### Get a single object
+![006.png](zipline/images/006.png)
+<br>
+<br>
+
+### Created a single object
+![007.png](zipline/images/007.png)
+<br>
+<br>
+
+### Appended data to a single object
+![008.png](zipline/images/008.png)
+<br>
+<br>
+
+### Replaced a single object
+![009.png](zipline/images/009.png)
+<br>
+<br>
+
+### Deleted Sigle element by ID
+![011.png](zipline/images/011.png)
+<br>
+<br>
 
 ## Object Schemas
 
@@ -178,4 +251,11 @@ Find postman collection [here](https://www.getpostman.com/collections/801dba9637
 	}
     ...
 ]
+```
+
+### Delete Message
+```
+{
+    "message": "<COUNT> object deleted successfully"
+}
 ```
