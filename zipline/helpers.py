@@ -1,13 +1,19 @@
 from flask_restful import fields
+from pymongo.errors import BulkWriteError
 
 def modify_product(product):
+    """
+    Convert ObjectId type to string
+    """
     product['_id'] = str(product['_id'])
     return product
 
 def modify_products(products):
+    """
+    Recursively convert ObjectId type to string
+    """
     for p in products:
-        p['_id'] = str(pp['_id'])
-    
+        modify_product(p)
     return products
 
 resource_field_update = {
@@ -35,6 +41,17 @@ resource_field_bulk_write = {
     "acknowledged": fields.Boolean,
     "matched_count": fields.Integer,
     "modified_count": fields.Integer,
-    "upserted_id": fields.Integer,
     "deleted_count": fields.Integer,
+    "inserted_count": fields.Integer,
 }
+
+def perform_bulk(collection, requests):
+    """
+    Common interface to perform bilk operations on a given collection.
+    """
+    try:
+        obj = collection.bulk_write(requests, ordered=False)
+    except BulkWriteError as bwe:
+        print(bwe)
+        return {"message": "Some error occured, check logs"}, 500
+    return obj
