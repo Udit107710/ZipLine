@@ -53,22 +53,27 @@ docker-compose up
 |api/v1/product/ | POST |<ol><li> [Product](#product) (in body)</li></ol>| [Message](#create-message)|
 |api/v1/product/<product_id>| PATCH |<ol><li> product_id (in URL)</li><li>[Product](#product) (in body)</li></ol>| [Update Message](#update-message)|
 |api/v1/product/<product_id>| PUT |<ol><li> product_id (in URL)</li><li>[Product](#product) (in body)</li></ol>| [Update Message](#update-message)|
-|api/v1/products | GET |<ol><li> skip[^1] (in query)</li><li> limit[^2] (in query)</li></ol>| [Products with details](##product-with-details)|
+|api/v1/products | GET |<ol><li> skip<sup>1</sup> (in query)</li><li> limit<sup>2</sup> (in query)</li></ol>| [Products with details](##product-with-details)|
 |api/v1/products | POST |<ol><li> Array of [Product](#product) (in body)</li></ol>| [Bulk Update Message](#bulk-write-message)|
 |api/v1/products | PATCH |<ol><li> Array of [this](#edit-multiple-details) (in body)</li></ol>| [Bulk Update Message](#bulk-write-message)|
 |api/v1/products | PUT |<ol><li> Array of [this](#edit-multiple-details) (in body)</li></ol>| [Bulk Update Message](#bulk-write-message)|
 
-[^1]: How many products to skip from start
+1: How many products to skip from start
 
-[^2]: How many products to fetch
+2: How many products to fetch
 <hr>
 <br>
 
 ## Examples
+### List with 5 elements skipped and 1 fetched
 ![001.png](zipline/images/001.png)
+<br>
+<br>
+
+#### List with 5 elements skipped and 2 fetched
 ![002.png](zipline/images/002.png)
 
-Find more such examples [here](https://www.getpostman.com/collections/801dba9637c62c737893)
+Find postman collection [here](https://www.getpostman.com/collections/801dba9637c62c737893)
 
 ## Object Schemas
 
